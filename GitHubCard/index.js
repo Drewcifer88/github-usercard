@@ -24,7 +24,61 @@
           user, and adding that card to the DOM.
 */
 
+
 const followersArray = [];
+
+
+function myObject(data){
+  const cards = document.createElement('div'),
+        img = document.createElement('img'),
+        cardInfo = document.createElement('div'),
+        name = document.createElement('p'),
+        userName = document.createElement('p'),
+        profile = document.createElement('p'),
+        href = document.createElement('p'),
+        followers = document.createElement('p'),
+        following = document.createElement('p'),
+        bio = document.createElement('p');
+
+  img.src = data.avatar_url;
+  name.textContent = data.name;
+  userName.textContent = data.login;
+  href.textContent = `Profile: ${data.html_url}`;
+  followers.textContent = `Followers: ${data.followers}`;
+  following.textContent = `Following: ${data.following}`;
+  bio.textContent = `Bio: ${data.bio}`;
+
+  cards.classList.add('card');
+  cardInfo.classList.add('card-info');
+  name.classList.add('name');
+  userName.classList.add('username');
+
+  cards.appendChild(img);
+  cards.appendChild(cardInfo);
+  cardInfo.appendChild(name);
+  cardInfo.appendChild(userName);
+  cardInfo.appendChild(profile);
+  cardInfo.appendChild(href);
+  cardInfo.appendChild(followers);
+  cardInfo.appendChild(following);
+  cardInfo.appendChild(bio);
+
+  return cards;
+  
+}
+
+const myVar = document.querySelector('.cards')
+
+axios.get('https://api.github.com/users/drewcifer88')
+  .then(response => {
+    console.log(response)
+    myVar.append(myObject(response.data));
+ })
+  .catch(error => {
+    console.log(error)
+})
+
+
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
