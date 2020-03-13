@@ -24,8 +24,16 @@
           user, and adding that card to the DOM.
 */
 
+const myVar = document.querySelector('.cards')
 
-const followersArray = [];
+axios.get('https://api.github.com/users/drewcifer88')
+  .then(response => {
+    console.log(response)
+    myVar.append(myObject(response.data));
+ })
+  .catch(error => {
+    console.log(error)
+})
 
 
 function myObject(data){
@@ -67,17 +75,23 @@ function myObject(data){
   
 }
 
-const myVar = document.querySelector('.cards')
+const followersArray = [
+  'rutrut6969',
+  'jighreps',
+  'mbidnyk1',
+  'LTims080913',
+];
 
-axios.get('https://api.github.com/users/drewcifer88')
-  .then(response => {
-    console.log(response)
-    myVar.append(myObject(response.data));
- })
-  .catch(error => {
-    console.log(error)
-})
-
+followersArray.forEach(follower => {
+  axios.get(`https://api.github.com/users/${follower}`)
+    .then(response => {
+      console.log(response.data);
+      myVar.append(myObject(response.data));
+    })
+    .catch(error => {
+      console.log(error);
+    });
+});
 
 
 /* Step 3: Create a function that accepts a single object as its only argument,
